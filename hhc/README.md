@@ -1,1 +1,2 @@
-# sha1bfcracker
+# hhc - simple haskell hash cracker
+
