@@ -4,6 +4,9 @@ import System.Environment
 import System.Directory
 import System.Exit
 import System.IO
+
+import Control.Monad
+
 import Lib
 
 validateArgs :: [String] -> IO ()
@@ -17,12 +20,19 @@ validateArgs args =
       else do
           processing
 
-
 main :: IO ()
 main = do
+  -- TODO: move to method (?), introduce context type (?)
     args <- getArgs
     validateArgs args
     let charset = args !! 0
     let minLen = read $ args !! 1 :: Int
     let maxLen = read $ args !! 2 :: Int
-    print $ sha1bf charset minLen maxLen "b40981aab75932c5b2f555f50769d878e44913d7"
+    let path = args !! 3
+    -- read file
+    handle <- openFile path ReadMode
+    contents <- hGetContents handle
+    let hashes = lines contents
+    let plains = map (sha1bf charset minLen maxLen) hashes
+    --let results = map (sha1bf') hashes
+    putStrLn $ plains !! 0
