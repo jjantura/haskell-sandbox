@@ -34,5 +34,4 @@ main = do
     contents <- hGetContents handle
     let hashes = lines contents
     let plains = map (sha1bf charset minLen maxLen) hashes
-    --let results = map (sha1bf') hashes
-    putStrLn $ plains !! 0
+    print $ plains 
