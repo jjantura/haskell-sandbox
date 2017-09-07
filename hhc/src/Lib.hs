@@ -25,11 +25,11 @@ upperLimit :: Int -> Int -> Int
 upperLimit charsetLen plainLen = sum [ charsetLen ^ x | x <- [0..plainLen]]
 
 -- charset, min len, max len, cipher -> plain text
-sha1bf :: String -> Int -> Int -> String -> String
+sha1bf :: String -> Int -> Int -> String -> (String, String)
 sha1bf charset minl maxl hash =
     let
       plains = [genplain charset i | i <- [lowerLimit (length charset) minl .. upperLimit (length charset) maxl]]
       hashes = map showDigest $ map sha1 $ map C.pack plains
       index = forceMaybe $ elemIndex hash hashes
     in
-      hash ++ "->" ++ genplain charset (index + (lowerLimit (length charset) minl))
+      (hash,  genplain charset (index + (lowerLimit (length charset) minl)))
