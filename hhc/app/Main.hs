@@ -1,10 +1,16 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Main where
 
 import System.Environment
 import System.Directory
 import System.Exit
 import System.IO
+import System.Clock
 
+import Formatting
+import Formatting.Clock
+
+import Control.Exception
 import Control.Monad
 
 import Lib
@@ -19,10 +25,11 @@ validateArgs args =
         exitFailure
       else do
           processing
-
+         
 main :: IO ()
 main = do
   -- TODO: move to method (?), introduce context type (?)
+    hSetEncoding stdout utf8
     args <- getArgs
     validateArgs args
     let charset = args !! 0
@@ -32,6 +39,10 @@ main = do
     -- read file
     handle <- openFile path ReadMode
     contents <- hGetContents handle
+    time0 <- getTime Monotonic
     let hashes = lines contents
     let plains = map (sha1bf charset minLen maxLen) hashes
+    time1 <- getTime Monotonic
     print $ plains 
+    let timeDiff = time1 - time0
+    fprint (timeSpecs % "\n") time0 time1
