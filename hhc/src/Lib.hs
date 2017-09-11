@@ -7,15 +7,16 @@ module Lib
 import qualified Data.ByteString.Lazy.Char8 as C
 import           Data.Digest.Pure.SHA
 import           Data.List
-import           Data.Maybe.Utils
+import           Data.Maybe
 import           Charset
 
--- charset, min len, max len, cipher -> plain text
+-- TODO: operate on hash list instead of single hash (performance)
+-- charset, min len, max len, cipher -> (hash, maybe plain text)
 sha1bf :: String -> Int -> Int -> String -> (String, String)
 sha1bf charset minl maxl hash =
     let
       plains = [genplain charset i | i <- [lowerLimit (length charset) minl .. upperLimit (length charset) maxl]]
       hashes = map showDigest $ map sha1 $ map C.pack plains
-      index = forceMaybe $ elemIndex hash hashes
+      maybeIndex = elemIndex hash hashes
     in
-      (hash,  genplain charset (index + (lowerLimit (length charset) minl)))
+      if isJust maybeIndex then (hash,  genplain charset (fromJust maybeIndex + (lowerLimit (length charset) minl))) else (hash, "")
