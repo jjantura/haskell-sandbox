@@ -25,7 +25,7 @@ validateArgs args =
         exitFailure
       else do
           processing
-         
+
 main :: IO ()
 main = do
   -- TODO: move to method (?), introduce context type (?)
@@ -33,16 +33,18 @@ main = do
     args <- getArgs
     validateArgs args
     let charset = args !! 0
-    let minLen = read $ args !! 1 :: Int
-    let maxLen = read $ args !! 2 :: Int
-    let path = args !! 3
+        minLen = read $ args !! 1 :: Int
+        maxLen = read $ args !! 2 :: Int
+        path = args !! 3
     -- read file
     handle <- openFile path ReadMode
     contents <- hGetContents handle
     time0 <- getTime Monotonic
+
     let hashes = lines contents
-    let plains = map (sha1bf charset minLen maxLen) hashes
+        plains = map (sha1bf charset minLen maxLen) hashes
+
     time1 <- getTime Monotonic
-    print $ plains 
+    print $ plains
     let timeDiff = time1 - time0
     fprint (timeSpecs % "\n") time0 time1
