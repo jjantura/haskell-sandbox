@@ -42,7 +42,7 @@ main = do
     time0 <- getTime Monotonic
 
     let hashes = lines contents
-        plains = map (sha1bf charset minLen maxLen) hashes
+        plains = sha1bf charset minLen maxLen hashes
 
     time1 <- getTime Monotonic
     print $ plains
