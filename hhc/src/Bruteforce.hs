@@ -1,4 +1,4 @@
-module Lib
+module Bruteforce
 
     ( sha1bf
     ) where
@@ -18,9 +18,3 @@ sha1bf charset minl maxl hashes =
     plains = map (genPlain charset) foundIndices
   in
     zip plains $ map showDigest $ map sha1 $ map C.pack $ plains
-
-
-
-
-
-

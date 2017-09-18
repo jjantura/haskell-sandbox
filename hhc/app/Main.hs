@@ -13,7 +13,7 @@ import Formatting.Clock
 import Control.Exception
 import Control.Monad
 
-import Lib
+import Bruteforce
 
 validateArgs :: [String] -> IO ()
 validateArgs args =
@@ -22,10 +22,9 @@ validateArgs args =
     let argsLen = length args in
       if (argsLen < 4 || argsLen > 4) then do
         incorrectUsage
-        exitFailure
+        exitFailure        
       else do
           processing
-
 main :: IO ()
 main = do
   -- TODO: move to method (?), introduce context type (?)

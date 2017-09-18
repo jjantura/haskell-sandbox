@@ -1,7 +1,7 @@
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
-import Lib
+import Bruteforce
 
 main :: IO ()
 main = hspec $ do
@@ -21,4 +21,3 @@ main = hspec $ do
 
         it "returns empty string for _invalid_ charset" $ do
             sha1bf "123456" 1 1 "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8" `shouldBe` ("86f7e437faa5a7fce15d1ddcb9eaeaea377667b8", "")
-
