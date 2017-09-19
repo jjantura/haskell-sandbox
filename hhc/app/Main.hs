@@ -12,6 +12,7 @@ import Formatting.Clock
 
 import Control.Exception
 import Control.Monad
+import           Crypto.Hash             (hashWith, SHA1 (..))
 
 import Bruteforce
 
@@ -22,7 +23,7 @@ validateArgs args =
     let argsLen = length args in
       if (argsLen < 4 || argsLen > 4) then do
         incorrectUsage
-        exitFailure        
+        exitFailure
       else do
           processing
 main :: IO ()
@@ -41,7 +42,7 @@ main = do
     time0 <- getTime Monotonic
 
     let hashes = lines contents
-        plains = sha1bf charset minLen maxLen hashes
+        plains = bruteforce SHA1 charset minLen maxLen hashes
 
     time1 <- getTime Monotonic
     print $ plains
