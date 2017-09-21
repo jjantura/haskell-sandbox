@@ -3,6 +3,7 @@ import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
 import Bruteforce
+import Charset
 import           Crypto.Hash             (hashWith, SHA1 (..), MD5 (..))
 
 main :: IO ()
@@ -35,3 +36,15 @@ main = hspec $ do
 
         it "cracks two letters MD5 password for range [1-2]" $
             bruteforce MD5 "asdfghjkl" 1 2 ["4124bc0a9335c27f086f24ba207a4912"] `shouldBe` [("aa", "4124bc0a9335c27f086f24ba207a4912")]
+
+        it "calc lower limit for [1-2] lower alpha" $
+            lowerLimit 26 1 `shouldBe` 0
+
+        it "calc upper limit for [1-2] lower alpha" $
+            upperLimit 26 1 `shouldBe` 25
+
+        it "calc lower limit for [1-2] lower alpha" $
+            lowerLimit 26 2 `shouldBe` 26
+
+        it "calc upper limit for [1-2] lower alpha" $
+            upperLimit 26 2 `shouldBe` 701 -- 26^1 + 26^6 - 1

@@ -24,7 +24,7 @@ genPlain c i =
         getchar = c !! (snd qr):[]
 
 lowerLimit :: Int -> Int -> Int
-lowerLimit charsetLen plainLen = sum [ charsetLen ^ x | x <- [0..plainLen - 1]] - 1
+lowerLimit charsetLen plainLen = sum [ charsetLen ^ x | x <- [1..plainLen - 1]]  
 
 upperLimit :: Int -> Int -> Int
-upperLimit charsetLen plainLen = sum [ charsetLen ^ x | x <- [0..plainLen - 1]]
+upperLimit charsetLen plainLen = sum [ charsetLen ^ x | x <- [1..plainLen]] - 1
