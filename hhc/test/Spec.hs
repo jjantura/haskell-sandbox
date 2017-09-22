@@ -47,4 +47,4 @@ main = hspec $ do
             lowerLimit 26 2 `shouldBe` 26
 
         it "calc upper limit for [1-2] lower alpha" $
-            upperLimit 26 2 `shouldBe` 701 -- 26^1 + 26^6 - 1
+            upperLimit 26 2 `shouldBe` 701 -- 26^1 + 26^2 - 1
