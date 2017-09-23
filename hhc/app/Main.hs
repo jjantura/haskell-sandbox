@@ -21,18 +21,17 @@ validateArgs args =
     let incorrectUsage = putStrLn "incorrect usage\nusage charset minLen maxLen file_with_hashes" in
     let processing = putStrLn "processing, wait...\n" in
     let argsLen = length args in
-      if (argsLen < 4 || argsLen > 4) then do
+      if argsLen < 4 || argsLen > 4 then do
         incorrectUsage
         exitFailure
-      else do
-          processing
+      else processing
 main :: IO ()
 main = do
   -- TODO: move to method (?), introduce context type (?)
     hSetEncoding stdout utf8
     args <- getArgs
     validateArgs args
-    let charset = args !! 0
+    let charset = head args
         minLen = read $ args !! 1 :: Int
         maxLen = read $ args !! 2 :: Int
         path = args !! 3
@@ -44,7 +43,7 @@ main = do
     let hashes = lines contents
         plains = bruteforce SHA1 charset minLen maxLen hashes
 
-    print $ plains
+    print plains
     time1 <- getTime Monotonic
 
     let timeDiff = time1 - time0
