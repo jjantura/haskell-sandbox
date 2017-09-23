@@ -44,7 +44,8 @@ main = do
     let hashes = lines contents
         plains = bruteforce SHA1 charset minLen maxLen hashes
 
-    time1 <- getTime Monotonic
     print $ plains
+    time1 <- getTime Monotonic
+
     let timeDiff = time1 - time0
     fprint (timeSpecs % "\n") time0 time1
