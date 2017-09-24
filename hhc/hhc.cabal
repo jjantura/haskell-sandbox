@@ -29,6 +29,7 @@ executable hhc-exe
 test-suite hhc-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
+  other-modules:     BruteforceSpec, CharsetSpec
   main-is:             Spec.hs
   build-depends:       base, hhc, hspec, QuickCheck, cryptonite
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N

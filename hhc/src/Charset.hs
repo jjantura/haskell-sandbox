@@ -2,7 +2,8 @@ module Charset
     ( genPlain,
     maybeGenPlain,
     lowerLimit,
-    upperLimit
+    upperLimit,
+    keySpace
     ) where
 
 import           Data.List
@@ -23,8 +24,13 @@ genPlain c i =
         prefix = genPlain c ((fst qr) - 1)
         getchar = c !! (snd qr):[]
 
+        
+keySpace :: Int -> Int -> Int -> Int
+keySpace charsetLen minLen maxLen = sum [ charsetLen ^ x | x <- [minLen..maxLen]]
+                
 lowerLimit :: Int -> Int -> Int
 lowerLimit charsetLen plainLen = sum [ charsetLen ^ x | x <- [1..plainLen - 1]]  
 
 upperLimit :: Int -> Int -> Int
 upperLimit charsetLen plainLen = sum [ charsetLen ^ x | x <- [1..plainLen]] - 1
+
