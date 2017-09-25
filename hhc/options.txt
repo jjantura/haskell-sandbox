@@ -1,0 +1,18 @@
+-m --mode [obligatory]
+    avail values: benchmark, bruteforce, dict, rules
+
+-a --algorithm [optional, obligatory for modes: bruteforce, dict, rules ]
+    avail values: MD5, SHA1, ...
+
+-ll --min-length [optional, obligatory for mode: bruteforce]
+-ul --max-length [optional, obligatory for mode: bruteforce]
+
+-c --charset [optional, obligatory for mode: bruteforce] -- file? stdin?
+
+-d --dictionary [optional, obligatory for modes: dictionary, rules]
+
+-r --rules [optional, obligatory for modes: dictionary, rules]
+
+-t --threads [optional]
+
+-o --output [optional, stdout when not provided otherwise file]
