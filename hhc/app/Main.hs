@@ -13,8 +13,25 @@ import Formatting.Clock
 import Control.Exception
 import Control.Monad
 import           Crypto.Hash             (hashWith, SHA1 (..))
+import Options.Applicative
+import Data.Semigroup ((<>))
 
 import Bruteforce
+
+data ProgramArgs = ProgramArgs {
+    mode :: String
+}
+
+programArgs :: Parser ProgramArgs
+programArgs = ProgramArgs 
+                <$> strOption
+                ( 
+                    long "mode"
+                    <> short 'm'
+                    <> metavar "MODE"
+                    <> help "any of available modes [benchmark, bruteforce, dict, rules]"
+
+                )
 
 validateArgs :: [String] -> IO ()
 validateArgs args =
@@ -25,26 +42,39 @@ validateArgs args =
         incorrectUsage
         exitFailure
       else processing
+
+
+dispatch :: ProgramArgs -> IO ()
+dispatch (ProgramArgs m) = putStrLn $ "Selected mode: " ++ m
+dispatch  _ = return ()      
+
 main :: IO ()
-main = do
+main = dispatch =<< execParser opts
+    where
+        opts = info (programArgs <**> helper)
+            ( fullDesc
+            <> progDesc "Sample hash cracker"
+            <> header "blah blah" )
+
+
   -- TODO: move to method (?), introduce context type (?)
-    hSetEncoding stdout utf8
-    args <- getArgs
-    validateArgs args
-    let charset = head args
-        minLen = read $ args !! 1 :: Int
-        maxLen = read $ args !! 2 :: Int
-        path = args !! 3
-    -- read file
-    handle <- openFile path ReadMode
-    contents <- hGetContents handle
-    time0 <- getTime Monotonic
+    -- hSetEncoding stdout utf8
+    -- args <- getArgs
+    -- validateArgs args
+    -- let charset = head args
+    --     minLen = read $ args !! 1 :: Int
+    --     maxLen = read $ args !! 2 :: Int
+    --     path = args !! 3
+    -- -- read file
+    -- handle <- openFile path ReadMode
+    -- contents <- hGetContents handle
+    -- time0 <- getTime Monotonic
 
-    let hashes = lines contents
-        plains = bruteforce SHA1 charset minLen maxLen hashes
+    -- let hashes = lines contents
+    --     plains = bruteforce SHA1 charset minLen maxLen hashes
 
-    print plains
-    time1 <- getTime Monotonic
+    -- print plains
+    -- time1 <- getTime Monotonic
 
-    let timeDiff = time1 - time0
-    fprint (timeSpecs % "\n") time0 time1
+    -- let timeDiff = time1 - time0
+    -- fprint (timeSpecs % "\n") time0 time1
