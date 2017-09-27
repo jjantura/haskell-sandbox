@@ -1,18 +1,27 @@
--m --mode [obligatory]
-    avail values: benchmark, bruteforce, dict, rules
+commands: benchmark, bruteforce, dict, rules
+options for commands:
+    
+    benchmark: no options
 
--a --algorithm [optional, obligatory for modes: bruteforce, dict, rules ]
-    avail values: MD5, SHA1, ...
+    bruteforce: 
+        -a --algorithm [obligatory]
+        -ll --min-length [obligatory]
+        -ul --max-length [obligatory]
+        -c --charset [obligatory]
+        -i --input file with hashes [obligatory]
+        -t --threads thread count [optional]
+        -o --output [optional, stdout when not provided otherwise file]
+    dict:
+        -a --algorithm [obligatory]
+        -d --dictionary [obligatory]
+        -i --input file with hashes [obligatory]
+        -t --threads thread count [optional]
+        -o --output [optional, stdout when not provided otherwise file]        
+    rules:              
+        -r --rules [obligatory]
+        -i --input file with hashes [obligatory]
+        -t --threads thread count [optional]
+        -o --output [optional, stdout when not provided otherwise file]
 
--ll --min-length [optional, obligatory for mode: bruteforce]
--ul --max-length [optional, obligatory for mode: bruteforce]
 
--c --charset [optional, obligatory for mode: bruteforce] -- file? stdin?
 
--d --dictionary [optional, obligatory for modes: dictionary, rules]
-
--r --rules [optional, obligatory for modes: dictionary, rules]
-
--t --threads [optional]
-
--o --output [optional, stdout when not provided otherwise file]
