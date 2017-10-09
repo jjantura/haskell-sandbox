@@ -1,36 +1,41 @@
-import Options.Applicative
 import Data.Semigroup ((<>))
+import Options.Applicative
 
-data Sample = Sample
-  { hello      :: String
-  , quiet      :: Bool
-  , enthusiasm :: Int }
+data Opts = Opts
+    { optGlobalFlag :: !Bool
+    , optCommand :: !Command
+    }
 
-sample :: Parser Sample
-sample = Sample
-      <$> strOption
-          ( long "hello"
-         <> metavar "TARGET"
-         <> help "Target for the greeting" )
-      <*> switch
-          ( long "quiet"
-         <> short 'q'
-         <> help "Whether to be quiet" )
-      <*> option auto
-          ( long "enthusiasm"
-         <> help "How enthusiastically to greet"
-         <> showDefault
-         <> value 1
-         <> metavar "INT" )
+data Command
+    = Create String
+    | Delete
 
 main :: IO ()
-main = greet =<< execParser opts
-    where
-        opts = info (sample <**> helper)
-            ( fullDesc
-            <> progDesc "Print a greeting for TARGET"
-            <> header "hello - a test for optparse-applicative" )
-
-greet :: Sample -> IO ()
-greet (Sample h False n) = putStrLn $ "Hello, " ++ h ++ replicate n '!'
-greet _ = return ()         
+main = do
+    opts <- execParser optsParser
+    case optCommand opts of
+        Create name -> putStrLn ("Created the thing named " ++ name)
+        Delete -> putStrLn "Deleted the thing!"
+    putStrLn ("global flag: " ++ show (optGlobalFlag opts))
+  where
+    optsParser =
+        info
+            (helper <*> versionOption <*> programOptions)
+            (fullDesc <> progDesc "optparse subcommands example" <>
+             header
+                 "optparse-sub-example - a small example program for optparse-applicative with subcommands")
+    versionOption = infoOption "0.0" (long "version" <> help "Show version")
+    programOptions =
+        Opts <$> switch (long "global-flag" <> help "Set a global flag") <*>
+        hsubparser (createCommand <> deleteCommand)
+    createCommand =
+        command
+            "create"
+            (info createOptions (progDesc "Create a thing"))
+    createOptions =
+        Create <$>
+        strArgument (metavar "NAME" <> help "Name of the thing to create")
+    deleteCommand =
+        command
+            "delete"
+            (info (pure Delete) (progDesc "Delete the thing"))
