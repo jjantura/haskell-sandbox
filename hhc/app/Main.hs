@@ -17,6 +17,7 @@ import Options.Applicative
 import Data.Semigroup ((<>))
 
 import Bruteforce
+import Dictionary
 
 -- data ProgramArgs = ProgramArgs {
 --     mode :: String
@@ -63,8 +64,8 @@ main = do
     time0 <- getTime Monotonic
 
     let hashes = lines contents
-        plains = bruteforce SHA1 charset minLen maxLen hashes
-
+        -- plains = bruteforce SHA1 charset minLen maxLen hashes
+        plains = dictionary SHA1 ["ala", "ma", "kota"] hashes
     print plains
     time1 <- getTime Monotonic
 
