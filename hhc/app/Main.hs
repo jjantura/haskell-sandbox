@@ -13,25 +13,9 @@ import Formatting.Clock
 import Control.Exception
 import Control.Monad
 import           Crypto.Hash             (hashWith, SHA1 (..))
-import Options.Applicative
-import Data.Semigroup ((<>))
 
 import Bruteforce
 import Dictionary
-
--- data ProgramArgs = ProgramArgs {
---     mode :: String
--- }
-
--- programArgs :: Parser ProgramArgs
--- programArgs = ProgramArgs 
---                 <$> strOption
---                 ( 
---                     long "mode"
---                     <> short 'm'
---                     <> metavar "MODE"
---                     <> help "any of available modes [benchmark, bruteforce, dict, rules]"
---                 )
 
 validateArgs :: [String] -> IO ()
 validateArgs args =
@@ -42,11 +26,6 @@ validateArgs args =
         incorrectUsage
         exitFailure
       else processing
-
-
--- dispatch :: ProgramArgs -> IO ()
--- dispatch (ProgramArgs m) = putStrLn $ "Selected mode: " ++ m
--- dispatch  _ = return ()      
 
 main :: IO ()
 main = do
