@@ -19,6 +19,8 @@ import Crypto.Hash             (hashWith, SHA1 (..))
 import Bruteforce
 import Dictionary
 
+
+-- TODO: this code is ugly and unreadable, replace with applicative optparse asap
 takeArgValue :: String -> [String] -> Maybe String
 takeArgValue arg args = 
     let maybeArgIndex = arg `elemIndex` args in
@@ -28,26 +30,29 @@ takeArgValue arg args =
             if index < argsCount then Just (args !! succ index) else Nothing
         else Nothing
 
-dispatch :: Maybe String -> IO()
-dispatch maybeArg = do    
+
+dispatch :: [String] -> IO()
+dispatch args = do    
     let incorrectUsage = putStrLn "incorrect usage\n" 
-        processing = putStrLn "processing, wait...\n" in
-            if isJust maybeArg then do
-                processing
+        processing = putStrLn "processing, wait...\n" 
+        maybeMode = takeArgValue "-m" args in
+            if isJust maybeMode then do
+                case fromJust maybeMode of 
+                    "bruteforce" -> putStrLn "Not Implemented Yet"
+                    "dictionary" -> putStrLn "Not Implemented Yet"
+                    "rules" -> putStrLn "Not Implemented Yet"
+                    "benchmark" -> putStrLn "Not Implemented Yet"
+                    _ -> putStrLn "Unknown mode"
                 exitSuccess                       
             else do
                 incorrectUsage
                 exitFailure
-
-        
--- TODO: this code is ugly and unreadable, replace with applicative optparse asap
-validateArgs :: [String] -> IO ()
-validateArgs args = dispatch $ takeArgValue "-m" args
+       
     
 main :: IO ()
 main = do
     args <- getArgs
-    validateArgs args
+    dispatch args
 --  TODO: move to method (?), introduce context type (?)
     -- hSetEncoding stdout utf8
     -- args <- getArgs
