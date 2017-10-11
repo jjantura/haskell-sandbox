@@ -14,15 +14,15 @@ import Formatting.Clock
 
 import Control.Exception
 import Control.Monad
-import Crypto.Hash             (hashWith, SHA1 (..))
+import Crypto.Hash             (hashWith, HashAlgorithm(..), SHA1 (..))
 
 import Bruteforce
 import Dictionary
 
 
 -- TODO: this code is ugly and unreadable, replace with applicative optparse asap
-takeArgValue :: String -> [String] -> Maybe String
-takeArgValue arg args = 
+takeArgValue :: [String] -> String -> Maybe String
+takeArgValue args arg = 
     let maybeArgIndex = arg `elemIndex` args in
     let index = fromJust maybeArgIndex in
     let argsCount = length args in   
@@ -30,15 +30,24 @@ takeArgValue arg args =
             if index < argsCount then Just (args !! succ index) else Nothing
         else Nothing
 
+crack_bf :: [String] -> IO()
+crack_bf args = do
+    -- plains = bruteforce SHA1 charset minLen maxLen hashes
+    let maybeAlgorithm = takeArgValue args "-a" 
+        charset = takeArgValue args "-c"
+        minLen = takeArgValue args "-ll"
+        maxLen = takeArgValue args "-ul"
+        hashes = takeArgValue args "-i" in 
+            putStrLn "xxx"
 
 dispatch :: [String] -> IO()
 dispatch args = do    
     let incorrectUsage = putStrLn "incorrect usage\n" 
         processing = putStrLn "processing, wait...\n" 
-        maybeMode = takeArgValue "-m" args in
+        maybeMode = takeArgValue args "-m" in
             if isJust maybeMode then do
                 case fromJust maybeMode of 
-                    "bruteforce" -> putStrLn "Not Implemented Yet"
+                    "bruteforce" -> crack_bf args
                     "dictionary" -> putStrLn "Not Implemented Yet"
                     "rules" -> putStrLn "Not Implemented Yet"
                     "benchmark" -> putStrLn "Not Implemented Yet"
