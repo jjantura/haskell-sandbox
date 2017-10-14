@@ -9,15 +9,14 @@ import System.Clock
 import Data.List
 import Data.Maybe
 
-import Formatting
-import Formatting.Clock
-
 import Control.Exception
 import Control.Monad
 import Crypto.Hash             (hashWith, HashAlgorithm(..), SHA1 (..))
 
 import Bruteforce
 import Dictionary
+
+import File
 
 
 -- TODO: this code is ugly and unreadable, replace with applicative optparse asap
@@ -30,15 +29,21 @@ takeArgValue args arg =
             if index < argsCount then Just (args !! succ index) else Nothing
         else Nothing
 
+asInt :: Maybe String -> Int
+asInt s = if isJust s then read $ fromJust s :: Int else -1
+
+asString :: Maybe String -> String
+asString s = if isJust s then fromJust s else ""
+
 crack_bf :: [String] -> IO()
-crack_bf args = do
-    -- plains = bruteforce SHA1 charset minLen maxLen hashes
+crack_bf args = do    
     let maybeAlgorithm = takeArgValue args "-a" 
-        charset = takeArgValue args "-c"
-        minLen = takeArgValue args "-ll"
-        maxLen = takeArgValue args "-ul"
-        hashes = takeArgValue args "-i" in 
-            putStrLn "xxx"
+        charset = asString $ takeArgValue args "-c"
+        minLen = asInt $ takeArgValue args "-ll"
+        maxLen = asInt $ takeArgValue args "-ul" in
+        do 
+            content <- loadFile $ asString $ takeArgValue args "-i"             
+            print $ bruteforce SHA1 charset minLen maxLen $ lines content
 
 dispatch :: [String] -> IO()
 dispatch args = do    
@@ -62,24 +67,3 @@ main :: IO ()
 main = do
     args <- getArgs
     dispatch args
---  TODO: move to method (?), introduce context type (?)
-    -- hSetEncoding stdout utf8
-    -- args <- getArgs
-    -- validateArgs args
-    -- let charset = head args
-    --     minLen = read $ args !! 1 :: Int
-    --     maxLen = read $ args !! 2 :: Int
-    --     path = args !! 3
-    -- -- read file
-    -- handle <- openFile path ReadMode
-    -- contents <- hGetContents handle
-    -- time0 <- getTime Monotonic
-
-    -- let hashes = lines contents
-    --     -- plains = bruteforce SHA1 charset minLen maxLen hashes
-        
-    -- print plains
-    -- time1 <- getTime Monotonic
-
-    -- let timeDiff = time1 - time0
-    -- fprint (timeSpecs % "\n") time0 time1
