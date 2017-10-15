@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+
 module Main where
 
 import System.Environment
@@ -6,12 +7,13 @@ import System.Directory
 import System.Exit
 import System.IO
 import System.Clock
+import Data.Char
 import Data.List
 import Data.Maybe
 
 import Control.Exception
 import Control.Monad
-import Crypto.Hash             (hashWith, HashAlgorithm(..), SHA1 (..))
+import Crypto.Hash             (hashWith, HashAlgorithm(..), SHA1 (..), MD5 (..))
 
 import Bruteforce
 import Dictionary
@@ -35,15 +37,22 @@ asInt s = if isJust s then read $ fromJust s :: Int else -1
 asString :: Maybe String -> String
 asString s = if isJust s then fromJust s else ""
 
-crack_bf :: [String] -> IO()
-crack_bf args = do    
-    let maybeAlgorithm = takeArgValue args "-a" 
+alg2bf alg = 
+    let lowercased = map toLower alg in        
+        case lowercased of
+            "sha1" -> bruteforce SHA1
+            _ -> bruteforce MD5
+
+
+userBruteforce :: [String] -> IO()
+userBruteforce args = do    
+    let alg = asString $ takeArgValue args "-a" 
         charset = asString $ takeArgValue args "-c"
         minLen = asInt $ takeArgValue args "-ll"
         maxLen = asInt $ takeArgValue args "-ul" in
         do 
             content <- loadFile $ asString $ takeArgValue args "-i"             
-            print $ bruteforce SHA1 charset minLen maxLen $ lines content
+            print $ alg2bf alg charset minLen maxLen $ lines content
 
 dispatch :: [String] -> IO()
 dispatch args = do    
@@ -52,7 +61,7 @@ dispatch args = do
         maybeMode = takeArgValue args "-m" in
             if isJust maybeMode then do
                 case fromJust maybeMode of 
-                    "bruteforce" -> crack_bf args
+                    "bruteforce" -> userBruteforce args
                     "dictionary" -> putStrLn "Not Implemented Yet"
                     "rules" -> putStrLn "Not Implemented Yet"
                     "benchmark" -> putStrLn "Not Implemented Yet"
