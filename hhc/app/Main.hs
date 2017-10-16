@@ -20,7 +20,6 @@ import Dictionary
 
 import File
 
-
 -- TODO: this code is ugly and unreadable, replace with applicative optparse asap
 takeArgValue :: [String] -> String -> Maybe String
 takeArgValue args arg = 
@@ -37,6 +36,7 @@ asInt s = if isJust s then read $ fromJust s :: Int else -1
 asString :: Maybe String -> String
 asString s = if isJust s then fromJust s else ""
 
+alg2bf :: String -> String -> Int -> Int -> [String] -> [(String, String)]
 alg2bf alg = 
     let lowercased = map toLower alg in        
         case lowercased of
@@ -70,7 +70,6 @@ dispatch args = do
             else do
                 incorrectUsage
                 exitFailure
-       
     
 main :: IO ()
 main = do
