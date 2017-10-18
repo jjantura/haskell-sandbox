@@ -57,10 +57,6 @@ userBruteforce args = do
                 content <- loadFile input             
                 print $ alg2bf alg charset minLen maxLen $ lines content
 
---validateBruteforceArgs :: [(Maybe String, Maybe String)] -> IO()           
--- validateBruteforceArgs argMap = do
-    
-                
 dispatch :: [String] -> IO()
 dispatch args = do    
     let incorrectUsage = putStrLn "incorrect usage\n" 
