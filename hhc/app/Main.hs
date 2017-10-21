@@ -46,18 +46,21 @@ alg2bf alg =
             "sha1" -> bruteforce SHA1
             _ -> bruteforce MD5
 
+argMap :: [String] -> Map (Maybe String) (Maybe String)
+argMap args = M.fromList $ L.map (takeArgValue args) ["-a", "-c", "-ll", "-ul", "-i"]
+
 userBruteforce :: [String] -> IO()
 userBruteforce args = do            
-        let argMap = M.fromList $ L.map (takeArgValue args) ["-a", "-c", "-ll", "-ul", "-i"]
-            alg = asString $ argMap ! Just "-a"
-            charset = asString $ argMap ! Just "-c"
-            minLen = asInt $ argMap ! Just "-ll"
-            maxLen = asInt $ argMap ! Just "-ul" 
-            input = asString $ argMap ! Just "-i" in
+        let am = argMap args
+            alg = asString $ am ! Just "-a"
+            charset = asString $ am ! Just "-c"
+            minLen = asInt $ am ! Just "-ll"
+            maxLen = asInt $ am ! Just "-ul" 
+            input = asString $ am ! Just "-i" in
             do 
                 content <- loadFile input             
                 print $ alg2bf alg charset minLen maxLen $ lines content
-
+       
 dispatch :: [String] -> IO()
 dispatch args = do    
     let incorrectUsage = putStrLn "incorrect usage, use -m switch \n" 
