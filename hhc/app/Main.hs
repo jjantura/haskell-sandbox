@@ -38,6 +38,7 @@ asInt s = if isJust s then read $ fromJust s :: Int else -1
 asString :: Maybe String -> String
 asString s = if isJust s then fromJust s else ""
 
+-- TODO: fix string to hash alg conversion
 alg2bf :: String -> String -> Int -> Int -> [String] -> [(String, String)]
 alg2bf alg = 
     let lowercased = L.map toLower alg in        
@@ -59,7 +60,7 @@ userBruteforce args = do
 
 dispatch :: [String] -> IO()
 dispatch args = do    
-    let incorrectUsage = putStrLn "incorrect usage\n" 
+    let incorrectUsage = putStrLn "incorrect usage, use -m switch \n" 
         processing = putStrLn "processing, wait...\n" 
         maybeMode = snd $ takeArgValue args "-m" in
             if isJust maybeMode then do
