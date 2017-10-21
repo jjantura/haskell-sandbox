@@ -8,7 +8,7 @@ TODO:
 - other algorithms: MD5, SHA*, RipeMD, ... [done]
 - other than brute-force modes (dictionary, dictionary with rules) [done]
 - testing [partly done]
-- benchmarking [partly done]
+- benchmarking single and multithreaded [partly done]
 - hash validation (length, content)
 - multithreading
 - optimization
