@@ -27,7 +27,7 @@ specialCharset :: String
 specialCharset = "~`!@#$%^&*()_+|-=\\{}[]:\";'<>?,./ "
 
 allPrintableASCIICharset :: String 
-allPrintableASCIICharset = lowerAlphaCharset ++ upperAlphaCharset ++ digitsCharset ++ specialCharset
+allPrintableASCIICharset = specialCharset ++ digitsCharset ++ lowerAlphaCharset ++ upperAlphaCharset 
 
 -- charset, index -> plain text
 maybeGenPlain :: String -> Maybe Int -> Maybe String
