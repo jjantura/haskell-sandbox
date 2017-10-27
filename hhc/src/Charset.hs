@@ -1,19 +1,37 @@
 module Charset
-    ( genPlain,
-    maybeGenPlain,
-    lowerLimit,
-    upperLimit,
-    keySpace
+    (   lowerAlphaCharset,
+        upperAlphaCharset,
+        digitsCharset,
+        specialCharset,
+        allPrintableASCIICharset,
+        genPlain,
+        maybeGenPlain,
+        lowerLimit,
+        upperLimit,
+        keySpace
     ) where
 
 import           Data.List
 import           Data.Maybe
 
+lowerAlphaCharset :: String
+lowerAlphaCharset = "qazwsxedcrfvtgbyhnujmikolp"  
+
+upperAlphaCharset :: String
+upperAlphaCharset = "QAZWSXEDCRFVTGBYHNUJMIKOLP"
+
+digitsCharset :: String
+digitsCharset = "0123456789"
+
+specialCharset :: String
+specialCharset = "~`!@#$%^&*()_+|-=\\{}[]:\";'<>?,./ "
+
+allPrintableASCIICharset :: String 
+allPrintableASCIICharset = lowerAlphaCharset ++ upperAlphaCharset ++ digitsCharset ++ specialCharset
 
 -- charset, index -> plain text
-maybeGenPlain:: String -> Maybe Int -> Maybe String
+maybeGenPlain :: String -> Maybe Int -> Maybe String
 maybeGenPlain c i = if isJust i then Just (genPlain c $ fromJust i) else Nothing
-
 
 -- charset, index -> plain text
 genPlain :: String -> Int -> String
