@@ -11,5 +11,4 @@ import System.IO
 loadFile :: FilePath -> IO String
 loadFile path = do
     handle <- openFile path ReadMode
-    contents <- hGetContents handle
-    return contents
+    hGetContents handle
