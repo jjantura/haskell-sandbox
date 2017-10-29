@@ -38,7 +38,7 @@ asInt :: Maybe String -> Int
 asInt s = if isJust s then read $ fromJust s :: Int else -1
 
 asString :: Maybe String -> String
-asString s = if isJust s then fromJust s else ""
+asString = fromMaybe ""
 
 -- TODO: fix string to hash alg conversion
 alg2bf :: String -> String -> Int -> Int -> [String] -> [(String, String)]
@@ -52,7 +52,7 @@ argMap :: [String] -> Map (Maybe String) (Maybe String)
 argMap args = M.fromList $ L.map (takeArgValue args) ["-a", "-c", "-ll", "-ul", "-i"]
 
 userBruteforce :: [String] -> IO()
-userBruteforce args = do            
+userBruteforce args =             
         let am = argMap args
             alg = asString $ am ! Just "-a"
             charset = asString $ am ! Just "-c"
@@ -65,7 +65,7 @@ userBruteforce args = do
 
 
 dispatch :: [String] -> IO()
-dispatch args = do    
+dispatch args =     
     let incorrectUsage = putStrLn "incorrect usage, use -m switch \n" 
         processing = putStrLn "processing, wait...\n" 
         maybeMode = snd $ takeArgValue args "-m" in
