@@ -14,8 +14,6 @@ import Data.Maybe
 import Data.Tuple.Select
 
 import Control.Exception
-
-import Control.Exception
 import Control.Monad
 import Crypto.Hash             (hashWith, HashAlgorithm(..), SHA1 (..), MD5 (..))
 
