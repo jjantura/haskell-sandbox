@@ -36,11 +36,11 @@ maybeGenPlain c i = if isJust i then Just (genPlain c $ fromJust i) else Nothing
 -- charset, index -> plain text
 genPlain :: String -> Int -> String
 genPlain c i =
-  if (i < length c) then getchar else prefix ++ getchar
+  if i < length c then getchar else prefix ++ getchar
     where
         qr = i `divMod` length c
-        prefix = genPlain c ((fst qr) - 1)
-        getchar = c !! (snd qr):[]
+        prefix = genPlain c (fst qr - 1)
+        getchar = [c !! snd qr]
 
         
 keySpace :: Int -> Int -> Int -> Int
