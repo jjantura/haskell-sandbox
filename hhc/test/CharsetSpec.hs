@@ -8,8 +8,7 @@ import Bruteforce
 import Charset
 
 spec :: Spec
-spec = do
-
+spec = 
     describe "Charset calculations" $ do
         it "calc lower limit for [1-2] lower alpha" $ lowerLimit 26 1 `shouldBe` 0
 
