@@ -18,6 +18,8 @@ options for commands:
         -t --threads thread count [optional]
         -o --output [optional, stdout when not provided otherwise file]        
     rules:              
+        -a --algorithm [obligatory]
+        -d --dictionary [dictionary]
         -r --rules [obligatory]
         -i --input file with hashes [obligatory]
         -t --threads thread count [optional]
