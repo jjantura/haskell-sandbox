@@ -1,14 +1,14 @@
 {-# LANGUAGE TupleSections #-}
-module CharsetSpec where 
-    
-import Test.Hspec
-import Test.QuickCheck
-import Control.Exception (evaluate)
-import Bruteforce
-import Charset
+module CharsetSpec where
+
+import           Bruteforce
+import           Charset
+import           Control.Exception (evaluate)
+import           Test.Hspec
+import           Test.QuickCheck
 
 spec :: Spec
-spec = 
+spec =
     describe "Charset calculations" $ do
         it "calc lower limit for [1-2] lower alpha" $ lowerLimit 26 1 `shouldBe` 0
 

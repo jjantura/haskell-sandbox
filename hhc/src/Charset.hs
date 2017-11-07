@@ -15,7 +15,7 @@ import           Data.List
 import           Data.Maybe
 
 lowerAlphaCharset :: String
-lowerAlphaCharset = "qazwsxedcrfvtgbyhnujmikolp"  
+lowerAlphaCharset = "qazwsxedcrfvtgbyhnujmikolp"
 
 upperAlphaCharset :: String
 upperAlphaCharset = "QAZWSXEDCRFVTGBYHNUJMIKOLP"
@@ -26,8 +26,8 @@ digitsCharset = "0123456789"
 specialCharset :: String
 specialCharset = "~`!@#$%^&*()_+|-=\\{}[]:\";'<>?,./ "
 
-allPrintableASCIICharset :: String 
-allPrintableASCIICharset = specialCharset ++ digitsCharset ++ lowerAlphaCharset ++ upperAlphaCharset 
+allPrintableASCIICharset :: String
+allPrintableASCIICharset = specialCharset ++ digitsCharset ++ lowerAlphaCharset ++ upperAlphaCharset
 
 -- charset, index -> plain text
 maybeGenPlain :: String -> Maybe Int -> Maybe String
@@ -42,12 +42,12 @@ genPlain c i =
         prefix = genPlain c (fst qr - 1)
         getchar = [c !! snd qr]
 
-        
+
 keySpace :: Int -> Int -> Int -> Int
 keySpace charsetLen minLen maxLen = sum [ charsetLen ^ x | x <- [minLen..maxLen]]
-                
+
 lowerLimit :: Int -> Int -> Int
-lowerLimit charsetLen plainLen = sum [ charsetLen ^ x | x <- [1..plainLen - 1]]  
+lowerLimit charsetLen plainLen = sum [ charsetLen ^ x | x <- [1..plainLen - 1]]
 
 upperLimit :: Int -> Int -> Int
 upperLimit charsetLen plainLen = sum [ charsetLen ^ x | x <- [1..plainLen]] - 1
