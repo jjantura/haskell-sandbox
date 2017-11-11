@@ -3,7 +3,6 @@ module Bruteforce
     ( useBruteforce,
       bruteforce
     ) where
-
 import           Charset
 import           CommandLine
 import           Crypto.Hash        (HashAlgorithm (..), MD5 (..), SHA1 (..),
@@ -15,7 +14,7 @@ import           Data.Maybe
 import           Data.Text          (pack)
 import           Data.Text.Encoding (encodeUtf8)
 import           File
-
+import           System.Exit
 
 -- TODO: fix string to hash alg conversion
 alg2bf :: String -> String -> Int -> Int -> [String] -> [(String, String)]
@@ -28,21 +27,25 @@ alg2bf alg =
 argList :: [String] -> [(Maybe String, Maybe String)]
 argList args = L.map (takeArgValue args) ["-a", "-c", "-ll", "-ul", "-i"]
 
--- obligatory params
-argMap :: [String] -> Map (Maybe String) (Maybe String)
-argMap args = M.fromList $ argList args
+validateArgs :: [(Maybe String, Maybe String)] -> Bool
+validateArgs = L.foldl (\a e -> if isNothing $ snd e then a && False else a) True
 
 useBruteforce :: [String] -> IO()
 useBruteforce args =
-        let am = argMap args
-            alg = asString $ am ! Just "-a"
-            charset = asString $ am ! Just "-c"
-            minLen = asInt $ am ! Just "-ll"
-            maxLen = asInt $ am ! Just "-ul"
-            input = asString $ am ! Just "-i" in
-            do
-                content <- loadFile input
-                print $ alg2bf alg charset minLen maxLen $ lines content
+                if validateArgs al then do
+                    content <- loadFile input
+                    print $ alg2bf alg charset minLen maxLen $ lines content
+                else do
+                    putStrLn "Error: incorrect usage. Usage: hhc -m bruteforce -a [MD5|SHA1] -c [charset] -ll [lower length limit] -ul [upper length limit] -i [input_file_with_hashes]"
+                    exitFailure
+            where
+                al = argList args
+                am = fromList al
+                alg = asString $ am ! Just "-a"
+                charset = asString $ am ! Just "-c"
+                minLen = asInt $ am ! Just "-ll"
+                maxLen = asInt $ am ! Just "-ul"
+                input = asString $ am ! Just "-i"
 
 asInt :: Maybe String -> Int
 asInt s = if isJust s then read $ fromJust s :: Int else -1
