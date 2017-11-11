@@ -25,9 +25,12 @@ alg2bf alg =
             "sha1" -> bruteforce SHA1
             _      -> bruteforce MD5
 
-argMap :: [String] -> Map (Maybe String) (Maybe String)
-argMap args = M.fromList $ L.map (takeArgValue args) ["-a", "-c", "-ll", "-ul", "-i"]
+argList :: [String] -> [(Maybe String, Maybe String)]
+argList args = L.map (takeArgValue args) ["-a", "-c", "-ll", "-ul", "-i"]
 
+-- obligatory params
+argMap :: [String] -> Map (Maybe String) (Maybe String)
+argMap args = M.fromList $ argList args
 
 useBruteforce :: [String] -> IO()
 useBruteforce args =
