@@ -16,7 +16,7 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Benchmark, Bruteforce, Charset, Dictionary, File, CommandLine
-  build-depends:       base >= 4.7 && < 5, bytestring, cryptonite, MissingH, text, directory, clock, containers
+  build-depends:       base >= 4.7 && < 5, bytestring, cryptonite, MissingH, text, directory, clock, containers, deepseq
   default-language:    Haskell2010
 
 executable hhc-exe
