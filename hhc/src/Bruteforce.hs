@@ -3,6 +3,8 @@ module Bruteforce
     ( useBruteforce,
       bruteforce
     ) where
+
+import           Common
 import           Charset
 import           CommandLine
 import           Crypto.Hash        (HashAlgorithm (..), MD5 (..), SHA1 (..),
@@ -16,19 +18,9 @@ import           Data.Text.Encoding (encodeUtf8)
 import           File
 import           System.Exit
 
--- TODO: fix string to hash alg conversion
-alg2bf :: String -> String -> Int -> Int -> [String] -> [(String, String)]
-alg2bf alg =
-    let lowercased = L.map toLower alg in
-        case lowercased of
-            "sha1" -> bruteforce SHA1
-            _      -> bruteforce MD5
 
 argList :: [String] -> [(Maybe String, Maybe String)]
 argList args = L.map (takeArgValue args) ["-a", "-c", "-ll", "-ul", "-i"]
-
-validateArgs :: [(Maybe String, Maybe String)] -> Bool
-validateArgs = L.foldl (\a e -> if isNothing $ snd e then a && False else a) True
 
 useBruteforce :: [String] -> IO()
 useBruteforce args =
@@ -47,11 +39,7 @@ useBruteforce args =
                 maxLen = asInt $ am ! Just "-ul"
                 input = asString $ am ! Just "-i"
 
-asInt :: Maybe String -> Int
-asInt s = if isJust s then read $ fromJust s :: Int else -1
 
-asString :: Maybe String -> String
-asString = fromMaybe ""
 
 -- charset, min len, max len, cipher -> (hash, maybe plain text)
 bruteforce :: HashAlgorithm algorithm => algorithm -> String -> Int -> Int -> [String] -> [(String, String)]
