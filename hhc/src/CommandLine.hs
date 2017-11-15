@@ -11,5 +11,5 @@ takeArgValue args arg =
     let maybeArgIndex = arg `elemIndex` args in
     let index = fromJust maybeArgIndex in
     let argsCount = length args in
-        if isJust maybeArgIndex && index < argsCount then
+        if isJust maybeArgIndex && index + 1 < argsCount then
              (Just arg, Just (args !! succ index)) else (Just arg, Nothing)
