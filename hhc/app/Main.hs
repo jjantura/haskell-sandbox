@@ -37,7 +37,7 @@ dispatch args =
                 case fromJust maybeMode of
                     "benchmark"  -> benchmark
                     "bruteforce" -> useBruteforce args
-                    "dictionary" -> putStrLn "Not Implemented Yet"
+                    "dictionary" -> useDictionary args
                     "rules"      -> putStrLn "Not Implemented Yet"
                     _            -> putStrLn "Unknown mode"
                 exitSuccess
