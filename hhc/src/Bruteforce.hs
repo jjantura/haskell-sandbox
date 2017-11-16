@@ -22,6 +22,13 @@ import           System.Exit
 argList :: [String] -> [(Maybe String, Maybe String)]
 argList args = L.map (takeArgValue args) ["-a", "-c", "-ll", "-ul", "-i"]
 
+alg2bf :: String -> String -> Int -> Int -> [String] -> [(String, String)]
+alg2bf alg =
+    let lowercased = L.map toLower alg in
+        case lowercased of
+            "sha1" -> bruteforce SHA1
+            _      -> bruteforce MD5
+
 useBruteforce :: [String] -> IO()
 useBruteforce args =
                 if validateArgs al then do
