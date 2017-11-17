@@ -5,7 +5,7 @@ module Common (
 ) where
 
 import           Data.Char
-import           Data.List          as L
+import           Data.List  as L
 import           Data.Maybe
 
 asInt :: Maybe String -> Int

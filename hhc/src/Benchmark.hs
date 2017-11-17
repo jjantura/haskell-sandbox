@@ -21,5 +21,5 @@ benchmark = do
     let timeInMillis = fromIntegral (toNanoSecs $ diffTimeSpec start end) / 1000000
     let keySpace = Cset.keySpace (length Cset.allPrintableASCIICharset) 1 3
     let performance = fromIntegral keySpace / timeInMillis * 1000
-    putStrLn $ "bruteforce, MD5, 1, " ++ show keySpace ++ ", 1, " ++ show performance 
+    putStrLn $ "bruteforce, MD5, 1, " ++ show keySpace ++ ", 1, " ++ show performance
 

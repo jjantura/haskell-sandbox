@@ -4,9 +4,9 @@ module Bruteforce
       bruteforce
     ) where
 
-import           Common
 import           Charset
 import           CommandLine
+import           Common
 import           Crypto.Hash        (HashAlgorithm (..), MD5 (..), SHA1 (..),
                                      hashWith)
 import           Data.Char

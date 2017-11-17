@@ -4,11 +4,11 @@ module Dictionary
     useDictionary
     ) where
 
-import           Common
 import           Charset
 import           CommandLine
+import           Common
 import           Crypto.Hash        (HashAlgorithm (..), MD5 (..), SHA1 (..),
-                                      hashWith)
+                                     hashWith)
 import           Data.Char
 import           Data.List          as L
 import           Data.Map           as M
