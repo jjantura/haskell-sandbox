@@ -46,8 +46,6 @@ useBruteforce args =
                 maxLen = asInt $ am ! Just "-ul"
                 input = asString $ am ! Just "-i"
 
-
-
 -- charset, min len, max len, cipher -> (hash, maybe plain text)
 bruteforce :: HashAlgorithm algorithm => algorithm -> String -> Int -> Int -> [String] -> [(String, String)]
 bruteforce algorithm charset minl maxl hashes =
