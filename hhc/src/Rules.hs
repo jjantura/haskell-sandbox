@@ -1,5 +1,9 @@
 module Rules (
-    rules
+    rules,
+    _duplicate,
+    _reverse,
+    _capitalize,
+    _lowercase
 ) where
 
 import Data.Char
