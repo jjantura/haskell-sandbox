@@ -4,7 +4,6 @@ module Common (
     validateArgs
 ) where
 
-import           Data.Char
 import           Data.List  as L
 import           Data.Maybe
 

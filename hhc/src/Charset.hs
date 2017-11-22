@@ -11,7 +11,6 @@ module Charset
         keySpace
     ) where
 
-import           Data.List
 import           Data.Maybe
 
 lowerAlphaCharset :: String

@@ -7,7 +7,6 @@ module Rules (
 ) where
 
 import Data.Char
-import Data.List
 
 rules :: [String -> String]
 rules = [_duplicate, _reverse, _capitalize, _lowercase]
