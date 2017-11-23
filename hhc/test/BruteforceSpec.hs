@@ -1,16 +1,11 @@
-{-# LANGUAGE TupleSections #-}
 module BruteforceSpec where
 
 import           Bruteforce
-import           Charset
-import           Control.Exception (evaluate)
-import           Crypto.Hash       (MD5 (..), SHA1 (..), hashWith)
+import           Crypto.Hash       (MD5 (..), SHA1 (..))
 import           Test.Hspec
-import           Test.QuickCheck
 
 spec :: Spec
 spec = do
-
     describe "SHA1.bruteforce" $ do
         it "cracks one letter SHA1 password for range [1-1]" $
             bruteforce SHA1 "asdfghjkl" 1 1 ["86f7e437faa5a7fce15d1ddcb9eaeaea377667b8"] `shouldBe` [("a", "86f7e437faa5a7fce15d1ddcb9eaeaea377667b8")]
