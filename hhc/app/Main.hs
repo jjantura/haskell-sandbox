@@ -15,7 +15,6 @@ import           CommandLine
 dispatch :: [String] -> IO()
 dispatch args =
     let incorrectUsage = putStrLn "incorrect usage, use -m switch \n"
-        processing = putStrLn "processing, wait...\n"
         maybeMode = snd $ takeArgValue args "-m" in
             if isJust maybeMode then do
                 case fromJust maybeMode of
