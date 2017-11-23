@@ -4,7 +4,6 @@ module Dictionary
     useDictionary
     ) where
 
-import           Charset
 import           CommandLine
 import           Common
 import           Crypto.Hash        (HashAlgorithm (..), MD5 (..), SHA1 (..),
@@ -34,7 +33,7 @@ useDictionary args =
                 if validateArgs al then do
                     wordlist <- loadFile dictFile
                     content <- loadFile input
-                    print $ alg2dict alg (lines wordlist)  (lines content)
+                    print $ alg2dict alg (lines wordlist) (lines content)
                 else do
                     putStrLn "Error: incorrect usage. Usage: hhc -m dictionary -a [MD5|SHA1] -d [dictionary] -i [input_file_with_hashes]"
                     exitFailure
