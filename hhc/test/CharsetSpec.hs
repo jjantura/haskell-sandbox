@@ -1,11 +1,7 @@
-{-# LANGUAGE TupleSections #-}
 module CharsetSpec where
 
-import           Bruteforce
 import           Charset
-import           Control.Exception (evaluate)
 import           Test.Hspec
-import           Test.QuickCheck
 
 spec :: Spec
 spec =

@@ -1,12 +1,8 @@
-{-# LANGUAGE TupleSections #-}
 module DictionarySpec where
 
-import           Charset
-import           Control.Exception (evaluate)
-import           Crypto.Hash       (MD5 (..), SHA1 (..), hashWith)
+import           Crypto.Hash       (MD5 (..), SHA1 (..))
 import           Dictionary
 import           Test.Hspec
-import           Test.QuickCheck
 
 spec :: Spec
 spec = do
