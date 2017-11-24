@@ -21,7 +21,7 @@ dispatch args =
                     "benchmark"  -> benchmark
                     "bruteforce" -> useBruteforce args
                     "dictionary" -> useDictionary args
-                    "rules"      -> putStrLn "Not Implemented Yet"
+                    "rules"      -> useDictionary args
                     _            -> putStrLn "Unknown mode"
                 exitSuccess
             else do

@@ -16,10 +16,11 @@ import           Data.Text          (pack)
 import           Data.Text.Encoding (encodeUtf8)
 import           File
 import           System.Exit
+import           Rules
 
 
 argList :: [String] -> [(Maybe String, Maybe String)]
-argList args = L.map (takeArgValue args) ["-a", "-d", "-i"]
+argList args = L.map (takeArgValue args) ["-a", "-d", "-i", "-m"]
 
 alg2dict :: String -> [String] -> [String] -> [(String, String)]
 alg2dict alg =
@@ -33,7 +34,7 @@ useDictionary args =
                 if validateArgs al then do
                     wordlist <- loadFile dictFile
                     content <- loadFile input
-                    print $ alg2dict alg (lines wordlist) (lines content)
+                    print $ alg2dict alg (lines wordlist) (applyRules $ lines content)
                 else do
                     putStrLn "Error: incorrect usage. Usage: hhc -m dictionary -a [MD5|SHA1] -d [dictionary] -i [input_file_with_hashes]"
                     exitFailure
@@ -43,6 +44,9 @@ useDictionary args =
                 alg = asString $ am ! Just "-a"
                 dictFile = asString $ am ! Just "-d"
                 input = asString $ am ! Just "-i"
+                applyRules = if (asString $ am ! Just "-m") == "rules" then (rules <*>) else ([id] <*>)
+                 
+
 
 -- dictionary, cipher -> (hash, maybe plain text)
 dictionary :: HashAlgorithm algorithm => algorithm -> [String] -> [String] -> [(String, String)]

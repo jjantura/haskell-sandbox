@@ -24,4 +24,3 @@ _lowercase :: String -> String
 _lowercase = map toLower
 
 
-
