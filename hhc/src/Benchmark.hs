@@ -5,8 +5,7 @@ module Benchmark (
 import           Bruteforce
 import           Charset         as Cset
 import           Control.DeepSeq
-import           Crypto.Hash     (HashAlgorithm (..), MD5 (..), SHA1 (..),
-                                  hashWith)
+import           Crypto.Hash     (MD5 (..), SHA1 (..))
 import           System.Clock
 
 headers :: [String]
