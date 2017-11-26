@@ -33,8 +33,8 @@ useDictionary :: [String] -> IO()
 useDictionary args =
                 if validateArgs al then do
                     wordlist <- loadFile dictFile
-                    content <- loadFile input
-                    print $ alg2dict alg (lines wordlist) (applyRules $ lines content)
+                    content <- loadFile input              
+                    print $ alg2dict alg (applyRules $ lines wordlist) (lines content)
                 else do
                     putStrLn "Error: incorrect usage. Usage: hhc -m dictionary -a [MD5|SHA1] -d [dictionary] -i [input_file_with_hashes]"
                     exitFailure
