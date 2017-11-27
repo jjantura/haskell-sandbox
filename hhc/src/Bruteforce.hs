@@ -7,7 +7,7 @@ module Bruteforce
 import           Charset
 import           CommandLine
 import           Common
-import           Crypto.Hash        (HashAlgorithm (..), MD5 (..), SHA1 (..),
+import           Crypto.Hash        (HashAlgorithm (..), MD5 (..), SHA1 (..), SHA224 (..),
                                      hashWith)
 import           Data.Char
 import           Data.List          as L
@@ -25,9 +25,11 @@ argList args = L.map (takeArgValue args) ["-a", "-c", "-ll", "-ul", "-i"]
 alg2bf :: String -> String -> Int -> Int -> [String] -> [(String, String)]
 alg2bf alg =
     let lowercased = L.map toLower alg in
-        case lowercased of
+        case lowercased of            
+            "md5"  -> bruteforce MD5
             "sha1" -> bruteforce SHA1
-            _      -> bruteforce MD5
+            "sha224" -> bruteforce SHA224
+
 
 useBruteforce :: [String] -> IO()
 useBruteforce args =
