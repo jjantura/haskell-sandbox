@@ -19,8 +19,10 @@ import           File
 import           System.Exit
 
 
-argList :: [String] -> [(Maybe String, Maybe String)]
-argList args = L.map (takeArgValue args) ["-a", "-c", "-ll", "-ul", "-i"]
+requiredArgList :: [String] -> [(Maybe String, Maybe String)]
+requiredArgList args = L.map (takeArgValue args) ["-a", "-c", "-ll", "-ul", "-i"]
+
+
 
 alg2bf :: String -> String -> Int -> Int -> [String] -> [(String, String)]
 alg2bf alg =
@@ -40,7 +42,7 @@ useBruteforce args =
                     putStrLn "Error: incorrect usage. Usage: hhc -m bruteforce -a [MD5|SHA1] -c [charset] -ll [lower length limit] -ul [upper length limit] -i [input_file_with_hashes]"
                     exitFailure
             where
-                al = argList args
+                al = requiredArgList args
                 am = fromList al
                 alg = asString $ am ! Just "-a"
                 charset = asString $ am ! Just "-c"
