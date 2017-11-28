@@ -22,7 +22,8 @@ import           System.Exit
 requiredArgList :: [String] -> [(Maybe String, Maybe String)]
 requiredArgList args = L.map (takeArgValue args) ["-a", "-c", "-ll", "-ul", "-i"]
 
-
+optionalArgList :: [String] -> [(Maybe String, Maybe String)]
+optionalArgList args = L.map (takeArgValue args) ["-t"]
 
 alg2bf :: String -> String -> Int -> Int -> [String] -> [(String, String)]
 alg2bf alg =
@@ -52,11 +53,16 @@ useBruteforce args =
 
 -- charset, min len, max len, cipher -> (hash, maybe plain text)
 bruteforce :: HashAlgorithm algorithm => algorithm -> String -> Int -> Int -> [String] -> [(String, String)]
-bruteforce algorithm charset minl maxl hashes =
+bruteforce algorithm charset minl maxl hashes = bruteforceP algorithm charset (lowerLimit (length charset) minl) (upperLimit (length charset) maxl) hashes
+
+-- charset, min len, max len, cipher -> (hash, maybe plain text)
+bruteforceP :: HashAlgorithm algorithm => algorithm -> String -> Int -> Int -> [String] -> [(String, String)]
+bruteforceP algorithm charset lower upper hashes =
   let
     plainToDigest e = show $ hashWith algorithm $ encodeUtf8 $ pack e
     digest e = plainToDigest $ genPlain charset e
-    foundIndices = L.foldl' (\a e -> if isJust (elemIndex (digest e) hashes) then e:a else a) [] [lowerLimit (length charset) minl .. upperLimit (length charset) maxl]
+    foundIndices = L.foldl' (\a e -> if isJust (elemIndex (digest e) hashes) then e:a else a) [] [lower .. upper]
     plains = L.map (genPlain charset) foundIndices
   in
     zip plains $ L.map plainToDigest plains
+    
