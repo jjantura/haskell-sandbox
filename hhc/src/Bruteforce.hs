@@ -52,8 +52,8 @@ useBruteforce args =
                 input = asString $ am ! Just "-i"
 
 -- charset, min len, max len, cipher -> (hash, maybe plain text)
-bruteforce :: HashAlgorithm algorithm => algorithm -> String -> Int -> Int -> [String] -> [(String, String)]
-bruteforce algorithm charset minl maxl hashes = bruteforceP algorithm charset (lowerLimit (length charset) minl) (upperLimit (length charset) maxl) hashes
+bruteforce :: HashAlgorithm algorithm => algorithm -> String -> Int -> Int  -> [(String, String)]
+bruteforce algorithm charset minl maxl = bruteforceP algorithm charset (lowerLimit (length charset) minl) (upperLimit (length charset) maxl) 
 
 -- charset, min len, max len, cipher -> (hash, maybe plain text)
 bruteforceP :: HashAlgorithm algorithm => algorithm -> String -> Int -> Int -> [String] -> [(String, String)]
