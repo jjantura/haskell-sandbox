@@ -11,7 +11,10 @@ import           System.Clock
 headers :: [String]
 headers = ["method", "algorithm", "hashes count", "keyspace", "thread count", "performance[c/s]", "result"]
 
+nanoSecondsInSecond :: Double
 nanoSecondsInSecond = 1000000
+
+milliSecondsInSecond :: Double
 milliSecondsInSecond = 1000
 
 benchmarkEntry :: String -> String -> [(String, String)] -> IO()
