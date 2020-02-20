@@ -1,0 +1,47 @@
+	Tue Feb 18 22:09 2020 Time and Allocation Profiling Report  (Final)
+
+	   pwg-exe +RTS -N -p -RTS
+
+	total time  =        0.00 secs   (9 ticks @ 1000 us, 8 processors)
+	total alloc =   9,272,544 bytes  (excludes profiling overheads)
+
+COST CENTRE MODULE SRC                           %time %alloc
+
+toWords     Canvas src/Canvas.hs:(24,1)-(25,55)   33.3   72.5
+main        Main   app/Main.hs:(22,1)-(25,17)     33.3    1.5
+MAIN        MAIN   <built-in>                     11.1    1.4
+green       Color  src/Color.hs:14:36-40          11.1    0.0
+blue        Color  src/Color.hs:14:52-55          11.1    0.0
+mkCanvas    Canvas src/Canvas.hs:18:1-62           0.0   24.2
+
+
+                                                                                        individual      inherited
+COST CENTRE       MODULE                SRC                          no.     entries  %time %alloc   %time %alloc
+
+MAIN              MAIN                  <built-in>                   164          0   11.1    1.4   100.0  100.0
+ CAF              GHC.Conc.Signal       <entire-module>              275          0    0.0    0.0     0.0    0.0
+ CAF              GHC.IO.Encoding       <entire-module>              260          0    0.0    0.0     0.0    0.0
+ CAF              GHC.IO.Encoding.Iconv <entire-module>              258          0    0.0    0.0     0.0    0.0
+ CAF              GHC.IO.Handle.FD      <entire-module>              250          0    0.0    0.4     0.0    0.4
+ CAF              GHC.IO.Handle.Text    <entire-module>              248          0    0.0    0.0     0.0    0.0
+ CAF              GHC.Event.Thread      <entire-module>              210          0    0.0    0.0     0.0    0.0
+ CAF              GHC.IO.FD             <entire-module>              192          0    0.0    0.0     0.0    0.0
+ CAF              GHC.Event.Poll        <entire-module>              182          0    0.0    0.0     0.0    0.0
+ CAF:main1        Main                  <no location info>           326          0    0.0    0.0     0.0    0.0
+  main            Main                  app/Main.hs:(22,1)-(25,17)   328          1    0.0    0.0     0.0    0.0
+ CAF:main2        Main                  <no location info>           325          0    0.0    0.0     0.0    0.0
+ CAF:main_ws      Main                  <no location info>           324          0    0.0    0.0    55.6   96.6
+  main            Main                  app/Main.hs:(22,1)-(25,17)   330          0    0.0    0.0    55.6   96.6
+   toWords        Canvas                src/Canvas.hs:(24,1)-(25,55) 334      40001   33.3   72.5    55.6   72.5
+    blue          Color                 src/Color.hs:14:52-55        339      40000   11.1    0.0    11.1    0.0
+    green         Color                 src/Color.hs:14:36-40        338      40000   11.1    0.0    11.1    0.0
+    red           Color                 src/Color.hs:14:22-24        335      40000    0.0    0.0     0.0    0.0
+   mkCanvas       Canvas                src/Canvas.hs:18:1-62        331          1    0.0   24.2     0.0   24.2
+ CAF:redColor     Main                  app/Main.hs:19:1-8           323          0    0.0    0.0     0.0    0.0
+  redColor        Main                  app/Main.hs:19:1-27          336          1    0.0    0.0     0.0    0.0
+   mkColor        Color                 src/Color.hs:20:1-53         337          1    0.0    0.0     0.0    0.0
+ CAF:screenHeight Main                  app/Main.hs:16:1-12          322          0    0.0    0.0     0.0    0.0
+  screenHeight    Main                  app/Main.hs:16:1-18          333          1    0.0    0.0     0.0    0.0
+ CAF:screenWidth  Main                  app/Main.hs:13:1-11          321          0    0.0    0.0     0.0    0.0
+  screenWidth     Main                  app/Main.hs:13:1-17          332          1    0.0    0.0     0.0    0.0
+ main             Main                  app/Main.hs:(22,1)-(25,17)   329          0   33.3    1.5    33.3    1.5
